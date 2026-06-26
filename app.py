@@ -21,7 +21,9 @@ def load_model():
             import urllib.request
             url = 'https://huggingface.co/sujalgoyal/brain-tumor-model/resolve/main/brain_tumor_model.h5'
             urllib.request.urlretrieve(url, model_path)
-    return tf.keras.models.load_model(model_path)
+    # return tf.keras.models.load_model(model_path)
+    return tf.keras.models.load_model(model_path, compile=False)
+    
 
 model = load_model()
 
