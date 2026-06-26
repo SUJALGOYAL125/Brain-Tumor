@@ -2,7 +2,6 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
-import gdown
 import os
 
 # ============ PAGE CONFIG ============
@@ -13,13 +12,15 @@ st.set_page_config(
 )
 
 # ============ LOAD MODEL FROM GOOGLE DRIVE ============
+
 @st.cache_resource
 def load_model():
     model_path = 'brain_tumor_model.h5'
     if not os.path.exists(model_path):
-        with st.spinner("⏳ Downloading model please wait..."):
-            url = 'https://drive.google.com/uc?id=1FsfNmMGCggJAJTKOjNF7UsGCmQG6tSL8&export=download&confirm=t'
-            gdown.download(url, model_path, quiet=False, fuzzy=True)
+        with st.spinner("⏳ Downloading model, please wait..."):
+            import urllib.request
+            url = 'https://huggingface.co/sujalgoyal/brain-tumor-model/resolve/main/brain_tumor_model.h5'
+            urllib.request.urlretrieve(url, model_path)
     return tf.keras.models.load_model(model_path)
 
 model = load_model()
