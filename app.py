@@ -18,8 +18,8 @@ def load_model():
     model_path = 'brain_tumor_model.h5'
     if not os.path.exists(model_path):
         with st.spinner("⏳ Downloading model please wait..."):
-            url = 'https://drive.google.com/uc?id=1FsfNmMGCggJAJTKOjNF7UsGCmQG6tSL8'
-            gdown.download(url, model_path, quiet=False)
+            url = 'https://drive.google.com/uc?id=1FsfNmMGCggJAJTKOjNF7UsGCmQG6tSL8&export=download&confirm=t'
+            gdown.download(url, model_path, quiet=False, fuzzy=True)
     return tf.keras.models.load_model(model_path)
 
 model = load_model()
