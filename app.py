@@ -3,30 +3,28 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import os
-import tensorflow as tf
-import tf_keras as keras
+import urllib.request
 
 # ============ PAGE CONFIG ============
+
+
 st.set_page_config(
     page_title="Brain Tumor Detection",
     page_icon="🧠",
     layout="centered"
 )
 
+
 # ============ LOAD MODEL FROM GOOGLE DRIVE ============
 
 @st.cache_resource
 def load_model():
-    model_path = 'brain_tumor_model.h5'
+    model_path = 'brain_tumor_model.keras'
     if not os.path.exists(model_path):
         with st.spinner("⏳ Downloading model, please wait..."):
-            import urllib.request
-            url = 'https://huggingface.co/sujalgoyal/brain-tumor-model/resolve/main/brain_tumor_model.h5'
+            url = 'https://huggingface.co/sujalgoyal/brain-tumor-model/resolve/main/brain_tumor_model.keras'
             urllib.request.urlretrieve(url, model_path)
-    # return tf.keras.models.load_model(model_path)
-    # return tf.keras.models.load_model(model_path, compile=False)
-    return keras.models.load_model(model_path, compile=False)
-    
+    return tf.keras.models.load_model(model_path, compile=False)
 
 model = load_model()
 
