@@ -22,7 +22,7 @@ def load_model():
     model_path = 'brain_tumor_model.keras'
     if not os.path.exists(model_path):
         with st.spinner("⏳ Downloading model, please wait..."):
-            url = 'https://huggingface.co/sujalgoyal/brain-tumor-model/resolve/main/brain_tumor_model.keras'
+            url = 'https://huggingface.co/sujalgoyal/brain_tumor_model/resolve/main/brain_tumor_model.keras'
             urllib.request.urlretrieve(url, model_path)
     return tf.keras.models.load_model(model_path, compile=False)
 
