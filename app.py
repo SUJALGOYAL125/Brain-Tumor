@@ -3,6 +3,8 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import os
+import tensorflow as tf
+import tf_keras as keras
 
 # ============ PAGE CONFIG ============
 st.set_page_config(
@@ -22,7 +24,8 @@ def load_model():
             url = 'https://huggingface.co/sujalgoyal/brain-tumor-model/resolve/main/brain_tumor_model.h5'
             urllib.request.urlretrieve(url, model_path)
     # return tf.keras.models.load_model(model_path)
-    return tf.keras.models.load_model(model_path, compile=False)
+    # return tf.keras.models.load_model(model_path, compile=False)
+    return keras.models.load_model(model_path, compile=False)
     
 
 model = load_model()
