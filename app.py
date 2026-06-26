@@ -2,6 +2,8 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+import gdown
+import os
 
 # ============ PAGE CONFIG ============
 st.set_page_config(
@@ -10,10 +12,15 @@ st.set_page_config(
     layout="centered"
 )
 
-# ============ LOAD MODEL ============
+# ============ LOAD MODEL FROM GOOGLE DRIVE ============
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model('brain_tumor_model.h5')
+    model_path = 'brain_tumor_model.h5'
+    if not os.path.exists(model_path):
+        with st.spinner("⏳ Downloading model please wait..."):
+            url = 'https://drive.google.com/uc?id=1FsfNmMGCggJAJTKOjNF7UsGCmQG6tSL8'
+            gdown.download(url, model_path, quiet=False)
+    return tf.keras.models.load_model(model_path)
 
 model = load_model()
 
@@ -45,7 +52,7 @@ to detect brain tumors from MRI scans.
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("**Model:** VGG16 Transfer Learning")
-st.sidebar.markdown("**Accuracy:** 95%+")
+st.sidebar.markdown("**Accuracy:** 91.31%")
 st.sidebar.markdown("**Classes:** 4")
 
 # Main content
@@ -80,7 +87,7 @@ with col2:
 
                 # Show result
                 st.markdown("---")
-                if predicted_class == 2:  # No Tumor
+                if predicted_class == 2:
                     st.success(f"✅ {CLASS_NAMES[predicted_class]}")
                     st.balloons()
                 else:
@@ -104,7 +111,7 @@ with col2:
         1. Upload MRI brain scan image
         2. Click 'Detect Tumor' button
         3. View detection results
-        
+
         #### Detects:
         - 🔴 Glioma Tumor
         - 🟠 Meningioma Tumor
